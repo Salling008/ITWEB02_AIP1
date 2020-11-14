@@ -36,6 +36,12 @@ workoutRouter.post("/addExercise", mid.requiresLogin, function (req, res) {
   workoutController.addExerciseToWorkoutPost(req, res, id);
 });
 
+// DELETE /addExercise
+workoutRouter.delete("/deleteWorkout", mid.requiresLogin, function (req, res) {
+  let id = req.param("id");
+  workoutController.workoutDelete(id);
+});
+
 // POST /createWorkout
 workoutRouter.post("/createWorkout", mid.requiresLogin, function (
   req,

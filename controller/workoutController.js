@@ -11,6 +11,14 @@ function workoutGet(req, res) {
     });
 }
 
+function workoutDelete(req, res, id) {
+  Workout.deleteOne(id, function (error) {
+    if (error) {
+      return next(error);
+    }
+  });
+}
+
 function detailedWorkoutGet(req, res, id) {
   Workout.findById(id)
     .then((workout) => {
@@ -41,14 +49,9 @@ function workoutCreatePost(req, res, next) {
     exercise: exerciseData,
   };
 
-  Workout.create(workoutData, function (error, workout) {
+  Workout.create(workoutData, function (error) {
     if (error) {
       return next(error);
-    } else {
-      return res.render("detailedWorkout", {
-        title: "Your new and fancy workout",
-        workout,
-      });
     }
   });
 }
@@ -64,11 +67,9 @@ function addExerciseToWorkoutPost(req, res, id) {
   Workout.findByIdAndUpdate(
     id,
     { $push: { exercise: exerciseData } },
-    function (err, workout) {
+    function (err) {
       if (err) {
         res.send(err);
-      } else {
-        detailedWorkoutGet(req, res, id);
       }
     }
   );
@@ -79,6 +80,7 @@ function addExerciseToWorkoutGet(req, res, id) {
 }
 
 module.exports.workoutGet = workoutGet;
+module.exports.workoutDelete = workoutDelete;
 module.exports.workoutCreateGet = workoutCreateGet;
 module.exports.workoutCreatePost = workoutCreatePost;
 module.exports.detailedWorkoutGet = detailedWorkoutGet;

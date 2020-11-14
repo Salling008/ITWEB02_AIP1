@@ -49,7 +49,7 @@ app.use(
 );
 
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", routes, loginRouter, workoutRouter);
 module.exports = app;
