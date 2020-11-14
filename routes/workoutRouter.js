@@ -56,4 +56,10 @@ workoutRouter.post("/createWorkout", mid.requiresLogin, function (
   workoutController.workoutCreatePost(req, res, next);
 });
 
+// GET /completedworkouts
+workoutRouter.get("/completedworkouts", function (req, res) {
+  let id = req.param("id");
+  workoutController.completedWorkouts(req, res, id);
+});
+
 module.exports = workoutRouter;

@@ -20,23 +20,6 @@ function workoutDelete(req, res, id) {
   });
 }
 
-function detailedWorkoutGet(req, res, id) {
-  Workout.findById(id)
-    .then((workout) => {
-      res.render("detailedWorkout", {
-        workout,
-        title: `Workout: ${workout.title}`,
-      });
-    })
-    .catch(() => {
-      res.send("Sorry no workouts was found :(");
-    });
-}
-
-function workoutCreateGet(req, res) {
-  res.render("createWorkout", { title: "Create a workout" });
-}
-
 function workoutCreatePost(req, res, next) {
   var exerciseData = {
     exercise: req.body.exercise,
@@ -78,17 +61,42 @@ function addExerciseToWorkoutPost(req, res, id) {
 
 
 function addWorkoutToCompletedList(req, res) {
-  var userId = req.body.userId;
-  var workoutId = req.body.workoutId;
   User.findByIdAndUpdate(
-    userId,
-    { $push: { completedWorkouts: workoutId } },
+    req.body.userId,
+    { $push: { completedWorkouts: req.body.workoutId } },
     function (err) {
       if (err) {
         res.send(err);
       }
     }
   );
+}
+
+function completedWorkouts(req, res, id) {
+  var workoutList = [];
+
+  User.findById(id)
+    .then((user) => {
+
+
+  Workout.find()
+    .then((workouts) => {
+      for (i = 0; i < workouts.length; i++) {
+        for (j = 0; j < user.completedWorkouts.length; j++){          
+          if (workouts[i]._id == user.completedWorkouts[j]) {
+            workoutList.push(workouts[i]);
+          }
+        }
+      }
+      res.json(workoutList);
+    })
+    .catch(() => {
+      res.send("Sorry no workouts was found :(");
+    });
+    })
+    .catch(() => {
+      res.send("Sorry user was found :(");
+    });
 }
 
 
@@ -98,9 +106,8 @@ function addExerciseToWorkoutGet(req, res, id) {
 
 module.exports.workoutGet = workoutGet;
 module.exports.workoutDelete = workoutDelete;
-module.exports.workoutCreateGet = workoutCreateGet;
 module.exports.workoutCreatePost = workoutCreatePost;
-module.exports.detailedWorkoutGet = detailedWorkoutGet;
 module.exports.addExerciseToWorkoutPost = addExerciseToWorkoutPost;
 module.exports.addExerciseToWorkoutGet = addExerciseToWorkoutGet;
 module.exports.addWorkoutToCompletedList = addWorkoutToCompletedList;
+module.exports.completedWorkouts = completedWorkouts;
