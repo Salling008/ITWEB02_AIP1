@@ -1,6 +1,8 @@
 var User = require("../models/user");
+var Jwt = require('jsonwebtoken');
 
 function loginPost(req, res, next) {
+  var secret = 'secret123';
   if (req.body.email && req.body.password) {
     User.authenticate(req.body.email, req.body.password, function (
       error,
@@ -12,7 +14,8 @@ function loginPost(req, res, next) {
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.redirect("/workout");
+        const token = Jwt.sign({ sub: user._id }, secret)
+        return res.json({ id: user._id, token });
       }
     });
   } else {
@@ -23,7 +26,7 @@ function loginPost(req, res, next) {
 }
 
 function loginGet(req, res, next) {
-  return res.render("login", { title: "Log In" });
+  return res.send("login", { title: "Log In" });
 }
 
 function logoutGet(req, res, next) {
@@ -57,16 +60,11 @@ function registerPost(req, res, next) {
       email: req.body.email,
       password: req.body.password,
     };
-
     // use schema's `create` method to insert document into Mongo
     User.create(userData, function (error, user) {
       if (error) {
         return next(error);
-      } else {
-        req.session.userId = user._id;
-        return res.redirect("/workout");
-      }
-    });
+      }});
   } else {
     var err = new Error("All fields required.");
     err.status = 400;

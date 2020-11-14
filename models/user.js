@@ -11,6 +11,9 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  completedWorkouts: [{
+    type: String
+  }]
 });
 
 // authenticate input against database documents

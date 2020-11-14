@@ -36,10 +36,15 @@ workoutRouter.post("/addExercise", mid.requiresLogin, function (req, res) {
   workoutController.addExerciseToWorkoutPost(req, res, id);
 });
 
-// DELETE /addExercise
+// DELETE /deleteWorkout
 workoutRouter.delete("/deleteWorkout", mid.requiresLogin, function (req, res) {
   let id = req.param("id");
   workoutController.workoutDelete(id);
+});
+
+// POST /addWorkoutToCompletedList
+workoutRouter.post("/addToCompleteList",  function (req, res) {
+  workoutController.addWorkoutToCompletedList(req, res);
 });
 
 // POST /createWorkout

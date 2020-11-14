@@ -1,5 +1,6 @@
 const { settings } = require("../app");
 var Workout = require("../models/workout");
+var User = require("../models/user");
 
 function workoutGet(req, res) {
   Workout.find()
@@ -75,6 +76,22 @@ function addExerciseToWorkoutPost(req, res, id) {
   );
 }
 
+
+function addWorkoutToCompletedList(req, res) {
+  var userId = req.body.userId;
+  var workoutId = req.body.workoutId;
+  User.findByIdAndUpdate(
+    userId,
+    { $push: { completedWorkouts: workoutId } },
+    function (err) {
+      if (err) {
+        res.send(err);
+      }
+    }
+  );
+}
+
+
 function addExerciseToWorkoutGet(req, res, id) {
   res.render("addExercise", { title: "Add to exercise", id: id });
 }
@@ -86,3 +103,4 @@ module.exports.workoutCreatePost = workoutCreatePost;
 module.exports.detailedWorkoutGet = detailedWorkoutGet;
 module.exports.addExerciseToWorkoutPost = addExerciseToWorkoutPost;
 module.exports.addExerciseToWorkoutGet = addExerciseToWorkoutGet;
+module.exports.addWorkoutToCompletedList = addWorkoutToCompletedList;
