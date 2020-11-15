@@ -11,12 +11,12 @@ var MongoStore = require("connect-mongo")(session);
 
 const app = express();
 
- const corsOptions = {
-   origin: ["http://localhost:4200"],
-   credentials: true,
-   methods: "POST, PUT, OPTIONS, DELETE, GET",
-   allowedHeaders: "X-Requested-With, Content-Type"
- }
+const corsOptions = {
+  origin: ["http://localhost:4200"],
+  credentials: true,
+  methods: "POST, PUT, OPTIONS, DELETE, GET",
+  allowedHeaders: "X-Requested-With, Content-Type"
+}
 
 app.use(cors(corsOptions))
 app.options('*', cors(corsOptions));
