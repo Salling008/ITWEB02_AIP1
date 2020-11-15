@@ -15,7 +15,7 @@ const corsOptions = {
   origin: ["http://localhost:4200", "https://itweb-g12-a2-app.herokuapp.com", "https://itweb-g12-a2-app.herokuapp.com/"],
   credentials: true,
   methods: "POST, PUT, OPTIONS, DELETE, GET",
-  allowedHeaders: "X-Requested-With, Content-Type"
+  allowedHeaders: "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization",
 }
 
 app.use(cors(corsOptions))
