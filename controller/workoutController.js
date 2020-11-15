@@ -13,7 +13,7 @@ function workoutGet(req, res) {
 }
 
 function workoutDelete(req, res, id) {
-  Workout.deleteOne(id, function (error) {
+  Workout.findByIdAndDelete(id, function (error) {
     if (error) {
       return next(error);
     }
