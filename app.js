@@ -15,13 +15,19 @@ const corsOptions = {
   origin: ["http://localhost:4200", "https://itweb-g12-a2-app.herokuapp.com", "https://itweb-g12-a2-app.herokuapp.com/"],
   credentials: true,
   methods: "POST, PUT, OPTIONS, DELETE, GET",
-  allowedHeaders: "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization",
+  allowedHeaders: "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization, Origin, Accept",
 }
 
 app.use(cors(corsOptions))
 app.options('*', cors(corsOptions));
 
 app.set("port", process.env.PORT || 3000);
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization, Origin, Accept");
+  next();
+});
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
