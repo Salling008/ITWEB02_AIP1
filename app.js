@@ -18,17 +18,17 @@ const corsOptions = {
   allowedHeaders: "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization, Origin, Accept",
 }
 
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions));
-
-app.set("port", process.env.PORT || 3000);
-
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization, Origin, Accept");
   res.header('Access-Control-Allow-Credentials', true);
   next();
 });
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions));
+
+app.set("port", process.env.PORT || 3000);
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
