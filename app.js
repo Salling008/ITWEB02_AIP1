@@ -26,6 +26,7 @@ app.set("port", process.env.PORT || 3000);
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Access-Control-Allow-Headers, Authorization, Origin, Accept");
+  res.header('Access-Control-Allow-Credentials', true);
   next();
 });
 
