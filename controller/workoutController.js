@@ -12,8 +12,9 @@ function workoutGet(req, res) {
     });
 }
 
-function workoutDelete(req, res, id) {
-  Workout.findByIdAndDelete(id, function (error) {
+function workoutDelete(req, res) {
+  console.log(req.body.workoutId);
+  Workout.findByIdAndDelete(req.body.workoutId, function (error) {
     if (error) {
       return next(error);
     }

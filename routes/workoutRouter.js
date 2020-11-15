@@ -15,10 +15,9 @@ workoutRouter.post("/addExercise", function (req, res) {
   workoutController.addExerciseToWorkoutPost(req, res, id);
 });
 
-// DELETE /deleteWorkout
-workoutRouter.delete("/deleteWorkout", function (req, res) {
-  let id = req.param("id");
-  workoutController.workoutDelete(id);
+// POST /deleteWorkout
+workoutRouter.post("/deleteWorkout", function (req, res) {
+  workoutController.workoutDelete(req, res);
 });
 
 // POST /addWorkoutToCompletedList
